@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💚</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        body.pink-mode {
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffccd5 50%, #ffd6e0 100%);
+        }
+
+        body.celebration-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        /* Jamaican Flag */
+        .jamaican-flag {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            opacity: 0.15;
+            z-index: 1;
+            border: 3px solid rgba(255, 182, 193, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        body.pink-mode .jamaican-flag {
+            opacity: 0.25;
+            border-color: rgba(255, 105, 180, 0.4);
+        }
+
+        body.celebration-mode .jamaican-flag {
+            opacity: 0.4;
+            border-color: rgba(0, 255, 65, 0.6);
+        }
+
+        .flag-diagonal {
+            position: absolute;
+            background: #009B3A;
+            width: 200%;
+            height: 25%;
+        }
+
+        .flag-diagonal-1 {
+            top: 0;
+            left: -50%;
+            transform: rotate(26deg);
+            transform-origin: center;
+        }
+
+        .flag-diagonal-2 {
+            bottom: 0;
+            left: -50%;
+            transform: rotate(-26deg);
+            transform-origin: center;
+        }
+
+        .flag-yellow {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .flag-yellow-1 {
+            top: 0;
+            left: 0;
+            border-left: 60px solid #FED100;
+            border-right: 60px solid transparent;
+            border-bottom: 40px solid transparent;
+        }
+
+        .flag-yellow-2 {
+            top: 0;
+            right: 0;
+            border-right: 60px solid #FED100;
+            border-left: 60px solid transparent;
+            border-bottom: 40px solid transparent;
+        }
+
+        .flag-yellow-3 {
+            bottom: 0;
+            left: 0;
+            border-left: 60px solid #FED100;
+            border-right: 60px solid transparent;
+            border-top: 40px solid transparent;
+        }
+
+        .flag-yellow-4 {
+            bottom: 0;
+            right: 0;
+            border-right: 60px solid #FED100;
+            border-left: 60px solid transparent;
+            border-top: 40px solid transparent;
+        }
+
+        .flag-black {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .flag-black-1 {
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-top: 40px solid #000000;
+        }
+
+        .flag-black-2 {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 40px solid #000000;
+        }
+
+        /* Floating Hearts Background */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff69b4;
+            transform: rotate(-45deg);
+            animation: float 6s infinite ease-in-out;
+            opacity: 0.6;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff69b4;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(-45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Question */
+        .question {
+            font-family: 'Righteous', cursive;
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 1s ease;
+            transition: all 0.5s ease;
+        }
+
+        body.pink-mode .question {
+            color: #d63384;
+        }
+
+        body.celebration-mode .question {
+            color: #00ff41;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.8), 0 0 40px rgba(0, 255, 65, 0.4);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Photo Container */
+        .photo-container {
+            margin: 40px auto;
+            width: 300px;
+            height: 400px;
+            position: relative;
+            animation: fadeInUp 1s ease 0.3s both;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 5px solid transparent;
+            transition: all 0.5s ease;
+        }
+
+        body.pink-mode .photo-container {
+            border-color: rgba(255, 105, 180, 0.5);
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.4);
+        }
+
+        body.celebration-mode .photo-container {
+            border-color: #00ff41;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.6), 0 0 60px rgba(0, 255, 65, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .photo.hidden {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .photo.visible {
+            opacity: 1;
+        }
+
+        /* Danny Phantom Going Ghost Effect */
+        .ghost-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 255, 65, 0.3) 25%, 
+                rgba(0, 255, 65, 0.6) 50%, 
+                rgba(0, 255, 65, 0.3) 75%, 
+                transparent 100%);
+            opacity: 0;
+            pointer-events: none;
+            animation: goingGhost 2s ease-in-out;
+        }
+
+        @keyframes goingGhost {
+            0% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-100%);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200%);
+            }
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .btn-no:hover {
+            transform: scale(1.05);
+        }
+
+        body.pink-mode .btn-no {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        /* Celebration Mode */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Message */
+        .message {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            color: #2c3e50;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            transition: all 0.5s ease;
+        }
+
+        body.celebration-mode .message {
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Audio Player (Hidden) */
+        #music {
+            display: none;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .question {
+                font-size: 2rem;
+            }
+
+            .photo-container {
+                width: 250px;
+                height: 333px;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Glow effect for celebration */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 255, 65, 0.8), 0 0 60px rgba(0, 255, 65, 0.6);
+            }
+        }
+
+        body.celebration-mode .photo-container {
+            animation: glow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Jamaican Flag -->
+    <div class="jamaican-flag">
+        <div class="flag-diagonal flag-diagonal-1"></div>
+        <div class="flag-diagonal flag-diagonal-2"></div>
+        <div class="flag-yellow flag-yellow-1"></div>
+        <div class="flag-yellow flag-yellow-2"></div>
+        <div class="flag-yellow flag-yellow-3"></div>
+        <div class="flag-yellow flag-yellow-4"></div>
+        <div class="flag-black flag-black-1"></div>
+        <div class="flag-black flag-black-2"></div>
+    </div>
+
+    <!-- Floating Hearts -->
+    <div id="hearts-container"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="question" id="question">Will You Be My Valentine?</h1>
+        
+        <div class="photo-container" id="photoContainer">
+            <img src="shari-original.jpg" alt="Shari-Ann" class="photo visible" id="photo1">
+            <img src="shari-celebration.jpg" alt="Shari-Ann Happy" class="photo hidden" id="photo2">
+        </div>
+
+        <div class="button-container" id="buttonContainer">
+            <button class="btn btn-yes" id="btnYes">Yes! 💚</button>
+            <button class="btn btn-no" id="btnNo">No</button>
+        </div>
+
+        <div class="message hidden" id="message"></div>
+    </div>
+
+    <!-- Music -->
+    <audio id="music" loop>
+        <source src="secondhand.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            document.getElementById('hearts-container').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        // Generate hearts periodically
+        for (let i = 0; i < 15; i++) {
+            createHeart();
+        }
+        setInterval(createHeart, 800);
+
+        // Button functionality
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const question = document.getElementById('question');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const message = document.getElementById('message');
+        const photoContainer = document.getElementById('photoContainer');
+        const photo1 = document.getElementById('photo1');
+        const photo2 = document.getElementById('photo2');
+        const music = document.getElementById('music');
+
+        let clickedNoOnce = false;
+
+        // Yes button - Celebration!
+        btnYes.addEventListener('click', () => {
+            // Change to celebration mode
+            document.body.classList.add('celebration-mode');
+            
+            // Add ghost effect
+            const ghostEffect = document.createElement('div');
+            ghostEffect.className = 'ghost-effect';
+            photoContainer.appendChild(ghostEffect);
+
+            // Change photo after ghost effect
+            setTimeout(() => {
+                photo1.classList.remove('visible');
+                photo1.classList.add('hidden');
+                photo2.classList.remove('hidden');
+                photo2.classList.add('visible');
+            }, 1000);
+
+            // Update text
+            question.textContent = "I'm Going Ghost! 👻💚";
+            buttonContainer.classList.add('hidden');
+            message.textContent = "Shari-Ann & Danny Phantom Forever! 💚✨";
+            message.classList.remove('hidden');
+
+            // Play music
+            music.play().catch(e => console.log('Music autoplay prevented'));
+
+            // Create confetti
+            createConfetti();
+        });
+
+        // No button - Interactive dodge on mobile, pink mode on click
+        btnNo.addEventListener('click', () => {
+            if (!clickedNoOnce) {
+                // First click - turn pink and change question
+                document.body.classList.add('pink-mode');
+                question.textContent = "Are You Sure? 🥺";
+                btnYes.textContent = "Yes! 💕";
+                btnNo.textContent = "I'm Sure";
+                clickedNoOnce = true;
+            } else {
+                // Second click - show personality options
+                question.textContent = "Really? 😢";
+                buttonContainer.innerHTML = `
+                    <button class="btn btn-yes" onclick="window.location.reload()">Wait, I changed my mind! 💖</button>
+                `;
+                const newMessage = document.createElement('div');
+                newMessage.style.marginTop = '20px';
+                newMessage.style.fontSize = '1.1rem';
+                newMessage.style.color = '#d63384';
+                newMessage.innerHTML = `
+                    <p style="margin: 10px 0;">No, Jior is my valentine 💔</p>
+                    <p style="margin: 10px 0;">Personality #6 ran off but 1-5 are Jio's Valentine 🤷‍♀️</p>
+                `;
+                buttonContainer.appendChild(newMessage);
+            }
+        });
+
+        // Mobile touch - make no button move
+        let noButtonMoved = false;
+        btnNo.addEventListener('touchstart', (e) => {
+            if (!noButtonMoved) {
+                e.preventDefault();
+                const maxX = window.innerWidth - btnNo.offsetWidth - 40;
+                const maxY = window.innerHeight - btnNo.offsetHeight - 40;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                btnNo.style.position = 'fixed';
+                btnNo.style.left = randomX + 'px';
+                btnNo.style.top = randomY + 'px';
+                noButtonMoved = true;
+                
+                // Reset after animation
+                setTimeout(() => {
+                    noButtonMoved = false;
+                }, 500);
+            }
+        }, { passive: false });
+
+        // Confetti function
+        function createConfetti() {
+            const colors = ['#ff69b4', '#00ff41', '#ffffff', '#ffb6c1', '#98fb98'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+    </script>
+</body>
+</html>
